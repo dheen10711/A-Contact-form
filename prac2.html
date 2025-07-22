@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Project</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #333;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      background: #444;
+      padding: 0.5rem;
+      justify-content: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      flex-grow: 1;
+    }
+
+    form {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    form input, form textarea, form button {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .todo, .gallery {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      margin: 0.5rem 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    img {
+      max-width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Internship Web Project</h1>
+  </header>
+  <nav>
+    <a href="#contact">Contact Form</a>
+    <a href="#todo">To-Do List</a>
+    <a href="#gallery">Image Gallery</a>
+  </nav>
+  <div class="container">
+    <!-- Contact Form -->
+    <section id="contact">
+      <h2>Contact Form</h2>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <textarea id="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <!-- To-Do List -->
+    <section class="todo" id="todo">
+      <h2>To-Do List</h2>
+      <input type="text" id="todoInput" placeholder="New Task">
+      <button onclick="addTask()">Add Task</button>
+      <ul id="todoList"></ul>
+    </section>
+
+    <!-- Image Gallery -->
+    <section class="gallery" id="gallery">
+      <h2>Image Gallery</h2>
+      <input type="text" id="imageUrl" placeholder="Image URL">
+      <button onclick="addImage()">Add Image</button>
+      <div id="galleryContainer"></div>
+    </section>
+  </div>
+
+  <script>
+    // Contact Form Validation
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!name || !email || !message || !emailRegex.test(email)) {
+        alert("Please fill in all fields with valid information.");
+      } else {
+        alert("Form submitted successfully!");
+        this.reset();
+      }
+    });
+
+    // To-Do List Functions
+    function addTask() {
+      const taskInput = document.getElementById("todoInput");
+      const taskText = taskInput.value.trim();
+      if (taskText) {
+        const li = document.createElement("li");
+        li.innerHTML = `${taskText} <button onclick="this.parentElement.remove()">Remove</button>`;
+        document.getElementById("todoList").appendChild(li);
+        taskInput.value = "";
+      }
+    }
+
+    // Image Gallery Functions
+    function addImage() {
+      const urlInput = document.getElementById("imageUrl");
+      const imageUrl = urlInput.value.trim();
+      if (imageUrl) {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        document.getElementById("galleryContainer").appendChild(img);
+        urlInput.value = "";
+      }
+    }
+  </script>
+</body>
+</html>
